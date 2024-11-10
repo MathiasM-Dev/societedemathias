@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary"data-bs-theme="dark">
+  <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-expanded="false" aria-label="Toggle navigation" aria-controls="navbarScroll">
+        <span class="navbar-toggler-icon"></span>
+    </button> 
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+            <a class="navbar-brand text-success"  href="{{ path('app_home') }} "><img width="35%" src="{{ asset('uploads/images/6658452-200.png')}}" title="icon's mark"></img>POWERFUL</a>
+        </li>
+
+        {% if categories is defined %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Catégories
+            </a>
+            <ul class="dropdown-menu">
+              {#}{% for category in categories %}
+                <li><a class="dropdown-item text-primary categoryTitle" href="{{ path('app_home_product_filter',{'id':category.id} )}}">{{ category.name }}</a></li>
+                  {% for subCategory in category.subCategories %}
+                  <li><a class="dropdown-item" href="{{ path('app_home_product_filter',{'id':subCategory.id} )}} ">{{ subCategory.name }}</a></li>
+                  {% endfor %}
+                <li><hr class="dropdown-divider"></li>
+              {% endfor %}{#}
+              
+            </ul>
+          </li>
+        {% endif %}
+        {% if is_granted("ROLE_ADMIN") %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Admin
+              </a>
+              <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Catégories</a></li>
+                  <li><a class="dropdown-item" href="#">Ajouter une catégorie</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Sous-catégories</a></li>
+                  <li><a class="dropdown-item" href="#">Ajouter une sous-catégorie</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Utilisateurs</a></li>
+              </ul>
+            </li>
+        {% endif %}
+       {#} {% if app.user == false %}
+          <li class="nav-item">
+            <a href="{{ path('app_register') }} " class='nav-link'>S'inscrire</a>
+          </li> 
+          <li class="nav-item">
+            <a href="{{ path('app_login') }} " class='nav-link'>Se connecter</a>
+          </li> 
+        {% endif %}{#}
+        <!--Menu des commandes-->
+        {% if is_granted("ROLE_EDITOR") %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Vendeur
+              </a>
+              <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Produits</a></li>
+                  <li><a class="dropdown-item" href="#">Ajouter un produit</a></li>
+              </ul>
+            </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Commandes
+            </a>{#}
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{ path('app_orders_show',{'type':'is-completed'}) }}">Commandes livrées</a></li>
+              <li><a class="dropdown-item" href="{{ path('app_orders_show',{'type':'no_delivery'}) }}">Commandes non livrées</a></li>
+            </ul>{#}
+          </li> 
+        {% endif %}
+      </ul>
+    </div>
+      {% if is_granted ("ROLE_USER") %}
+        <a class="btn text-light" href="#"><img src="{{ asset('uploads/images/icon-panier.jpg')}}"></img>Panier</a>    
+        {#}<a class="btn btn-outline-danger" href="{{ path('app_logout') }}">Déconnexion</a>{#}
+      {% endif %}
+  </div>
+</nav>
