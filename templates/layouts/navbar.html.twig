@@ -51,7 +51,7 @@
           </li> 
         {% endif %}{#}
         <!--Menu des commandes-->
-        {% if is_granted("ROLE_EDITOR") %}
+       {#}{% if is_granted("ROLE_EDITOR") %}{#}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Vendeur
@@ -70,7 +70,8 @@
               <li><a class="dropdown-item" href="{{ path('app_orders_show',{'type':'no_delivery'}) }}">Commandes non livrées</a></li>
             </ul>{#}
           </li> 
-        {% endif %}
+        {#}
+        {% endif %}{#}
       </ul>
     </div>
       {% if is_granted ("ROLE_USER") %}
